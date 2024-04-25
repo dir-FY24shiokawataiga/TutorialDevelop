@@ -1,13 +1,18 @@
 package com.techacademy.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.codec.cbor.KotlinSerializationCborEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping; 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.techacademy.entity.User;
 import com.techacademy.service.UserService;
@@ -64,4 +69,17 @@ public class UserController {
         //一覧画面にリダイレクト
         return "redirect:/user/list";
     }
+   
+    @PostMapping(path="list",params = "deleteRun")
+    public String deleteRun(@RequestParam(name="idck")Set<Integer>idck, Model model) 
+    {
+        //Userを一括削除
+        service.deleteUser(idck);
+        //一覧画面にリダイレクト
+        return "redirect:/user/list";
+    }
+    
+        
+        
 }
+     
